@@ -1,4 +1,4 @@
-package boardmanager;
+package project1;
 
 public class Main {
 
@@ -17,9 +17,9 @@ public class Main {
 		BoardVO bvo = crud.selectOne(1);
 		System.out.println("Main.java:"+bvo);
 */
-		// Á¦¸ñ °Ë»ö
-		// ³»¿ë °Ë»ö
-		// id °Ë»ö
+		// ì œëª© ê²€ìƒ‰
+		// ë‚´ìš© ê²€ìƒ‰
+		// id ê²€ìƒ‰
 		/*E
 		list = crud.selectAll();
 		for (BoardVO vo : list) {
@@ -28,15 +28,14 @@ public class Main {
 		*/
 		
 		/*
-		list = crud.searchBySubject("Á¦");
+		list = crud.searchBySubject("ì œ");
 		for (BoardVO vo : list) {
 			System.out.println(vo);
 		}
 		*/
 		/*
-		list = crud.search("subject", "Á¦");
+		list = crud.search("subject", "ì œ");
 		System.out.println(list.size());
-
 		for (BoardVO vo : list) {
 			System.out.println(vo);
 		}

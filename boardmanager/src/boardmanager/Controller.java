@@ -1,11 +1,11 @@
-package boardmanager;
+package project1;
 
 import java.util.ArrayList;
 
 public class Controller {
 	BoardDAO dao = new BoardDAO();
 	
-	// 1-¸ñ·Ï
+	// 1-ëª©ë¡ë³´ê¸°
 	public ArrayList<BoardVO> viewList() {
 		
 		ArrayList<BoardVO> list = dao.selectAll();
@@ -17,13 +17,13 @@ public class Controller {
 		return list;
 	}
 	
-	// 2-»ó¼¼º¸±â
+	// 2-ìƒì„¸ë³´ê¸°
 	public BoardVO viewDetail(int bno) {
 		BoardVO bvo = dao.selectOne(bno);
 		return bvo;
 	}
 	
-	// 3-°Ë»ö
+	// 3-ê²€ìƒ‰
 	public ArrayList<BoardVO> search(String col, String text) {
 		
 		if (col.equals("0")) {
@@ -43,9 +43,18 @@ public class Controller {
 		return list;
 	}
 
-	// 6-»èÁ¦
+	// 6-ì‚­ì œ
 	public int remove(int bno) {
 		int result = dao.remove(bno);
 		return result;
 	}
+
+	// ì…ë ¥
+	public int write(BoardVO vo) {
+		int result = dao.write(vo);
+		return result;
+	}
+
+
+
 }

@@ -1,4 +1,4 @@
-package boardmanager;
+package project1;
 
 public class BoardVO {
 	private int bbs_no;

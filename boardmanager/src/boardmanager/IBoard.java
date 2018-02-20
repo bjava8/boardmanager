@@ -1,4 +1,4 @@
-package boardmanager;
+package project1;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public interface IBoard {
 	Connection getConnection();
 	public BoardVO selectOne(int bbs_no);
 	
-	// �˻�
+	// °Ë»ö
 	public ArrayList<BoardVO> searchBySubject(String subject);
 	//public ArrayList<BoardVO> searchByContent(String content);
 	public ArrayList<BoardVO> searchById(String id);

@@ -1,81 +1,102 @@
-package boardmanager;
+package project1;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class View {
+	static MemberVO ss;
+	MemberVO ss2;
+	
+	public View() {
+		ss = null;
+		ss2 = null;
+	}
 
 	public void start() {
 		
-		// 1-ÀÔ·Â
-		// ¸ñ·Ï º¸±â ÀÔ·ÂÇÔ.
-		// ±âº»°ªÀÌ 1-¸ñ·Ïº¸±â
+		// 1-ì…ë ¥
+		// ëª©ë¡ ë³´ê¸° ì…ë ¥í•¨.
+		// ê¸°ë³¸ê°’ì´ 1-ëª©ë¡ë³´ê¸°
 		String sel = "1";
 		
 		while (true) {
 			
-			if (sel.equals("1")) {	// 1-¸ñ·Ïº¸±â
-				viewList();	// Ãâ·Â
-				// ¸Ş´º
+			if (sel.equals("1")) {	// 1-ëª©ë¡ë³´ê¸°
+				viewList();	// ì¶œë ¥
+				// ë©”ë‰´
 				//ListMenu();
-			} else if (sel.equals("2")) { // 2-»ó¼¼º¸±â
-				// ¹øÈ£ ÀÔ·Â ¹Ş±â
+			} else if (sel.equals("2")) { // 2-ìƒì„¸ë³´ê¸°
+				// ë²ˆí˜¸ ì…ë ¥ ë°›ê¸°
 				int bno = inputNum();
 				viewDetail(bno);
 				//DetailMenu();
-			} else if (sel.equals("3")) { // 3-°Ë»ö
-				// Á¦¸ñ, ³»¿ë, ÀÛ¼ºÀÚ ¼±ÅÃ
-				String col = input("0-Á¦¸ñ, 1-³»¿ë, 2-ÀÛ¼ºÀÚ ¹øÈ£ ÀÔ·Â>");
-				// °Ë»ö¾î ÀÔ·Â
-				String text = input("°Ë»ö¾î ÀÔ·Â>"); 
+			} else if (sel.equals("3")) { // 3-ê²€ìƒ‰
+				// ì œëª©, ë‚´ìš©, ì‘ì„±ì ì„ íƒ
+				String col = input("0-ì œëª©, 1-ë‚´ìš©, 2-ì‘ì„±ì ë²ˆí˜¸ ì…ë ¥>");
+				// ê²€ìƒ‰ì–´ ì…ë ¥
+				String text = input("ê²€ìƒ‰ì–´ ì…ë ¥>"); 
 				search(col, text);
 				//ListMenu();
-			} else if (sel.equals("4")) { // 4-¾²±â
-				System.out.println("4-¾²±â");
-			} else if (sel.equals("5")) { // 5-¼öÁ¤
-				System.out.println("5-¼öÁ¤");
-			} else if (sel.equals("6")) { // 6-»èÁ¦
-				// ¹øÈ£ ÀÔ·Â ¹Ş±â
+			} else if (sel.equals("4")) { // 4-ì“°ê¸°
+				
+				if (ss != null) {
+					write(ss.getId());
+				} else	{
+					System.out.println("ë¡œê·¸ì¸í•˜ì„¸ìš”.");
+				}
+				
+			} else if (sel.equals("5")) { // 5-ìˆ˜ì •
+				System.out.println("5-ìˆ˜ì •");
+			} else if (sel.equals("6")) { // 6-ì‚­ì œ
+				// ë²ˆí˜¸ ì…ë ¥ ë°›ê¸°
 				int bno = inputNum();
 				remove(bno);
-			} else if (sel.equals("9")) { // 9-Á¾·á
+			} else if (sel.equals("7")) { // 7-ê°€ì…
+				
+			} else if (sel.equals("8")) { // 8-ë¡œê·¸ì¸
+				// ì•„ì´ë”” ì…ë ¥
+				// ë¹„ë°€ë²ˆí˜¸ ì…ë ¥
+				String id = input("ì•„ì´ë”” ì…ë ¥>");
+				String pw = input("ë¹„ë°€ë²ˆí˜¸ ì…ë ¥>");
+				login(id, pw);
+			} else if (sel.equals("99")) { // 99-ì¢…ë£Œ
 				break;
 			} else {
-				System.out.println("[ERROR] Àß¸øµÈ ¹øÈ£");
+				System.out.println("[ERROR] ì˜ëª»ëœ ë²ˆí˜¸");
 			}
 			
-			// 2-¿äÃ»
-			// ¸ñ·Ï º¸±â ¿äÃ»ÇÔ. viewList1();	
+			// 2-ìš”ì²­
+			// ëª©ë¡ ë³´ê¸° ìš”ì²­í•¨. viewList1();	
 			
 			
 			
 			
-			// 3-µğºñ°®´Ù¿À°í
+			// 3-ë””ë¹„ê°–ë‹¤ì˜¤ê³ 
 			
-			// 4-ÀÀ´ä
-			// 5-ÀÀ´ä ¹ŞÀº°Å Ãâ·Â
+			// 4-ì‘ë‹µ
+			// 5-ì‘ë‹µ ë°›ì€ê±° ì¶œë ¥
 			
-			// 6-´Ù½Ã ÀÔ·Â 1
-			showMenu();
+			// 6-ë‹¤ì‹œ ì…ë ¥ 1
+			showMenu(ss);
 			sel = input();
 
 		} // END while
 		
 		
-		System.out.println("Á¾·á");
+		System.out.println("ì¢…ë£Œ");
 		
-		// ¸Ş´º ÀÔ·Â
+		// ë©”ë‰´ ì…ë ¥
 		/*
 		do {
 			
 		
 			
-			// ¸ñ·Ï º¸±â
+			// ëª©ë¡ ë³´ê¸°
 			if (sel == "1") {
 				viewList();
 				
-				// ¸Ş´ºº¸¿©ÁÖ±â
+				// ë©”ë‰´ë³´ì—¬ì£¼ê¸°
 			}
 			
 			sel = input();
@@ -87,48 +108,79 @@ public class View {
 	} // END start()
 	
 
-/*
- * System.out.println("1. ¸ñ·Ï");
-		System.out.println("2. ÀĞ±â");
-		System.out.println("3. ±Û¾²±â");
-		System.out.println("4. °Ë»ö");
-		System.out.println("5. ¼öÁ¤");
-		System.out.println("6. »èÁ¦");
+	private void write(String id) {
+
+		Controller cont = new Controller();
+			
+		String subject = input("ì œëª©:");
+		String content = input("ë‚´ìš©:");
 		
-		System.out.println("9. Á¾·á");
+		BoardVO vo = new BoardVO();
+			
+		vo.setId(id);
+		vo.setSubject(subject);
+		vo.setContent(content);
+		
+		int result = cont.write(vo);
+			
+		if (result == 1) {
+			System.out.println("ì‚­ì œ ì™„ë£Œ");
+		} else {
+			System.out.println("ì‚­ì œ ì‹¤íŒ¨ : result="+result);
+		}
+	}
+
+	/*
+ * System.out.println("1. ëª©ë¡");
+		System.out.println("2. ì½ê¸°");
+		System.out.println("3. ê¸€ì“°ê¸°");
+		System.out.println("4. ê²€ìƒ‰");
+		System.out.println("5. ìˆ˜ì •");
+		System.out.println("6. ì‚­ì œ");
+		
+		System.out.println("9. ì¢…ë£Œ");
  * 
  */
 	public void ListMenu() {
-		System.out.println("2. »ó¼¼º¸±â");
-		System.out.println("3. °Ë»ö");
-		System.out.println("4. ¾²±â");
-		System.out.println("9. Á¾·á");
+		System.out.println("2. ìƒì„¸ë³´ê¸°");
+		System.out.println("3. ê²€ìƒ‰");
+		System.out.println("4. ì“°ê¸°");
+		System.out.println("9. ì¢…ë£Œ");
 	}
-	// »ó¼¼º¸±â ¸Ş´º
+	// ìƒì„¸ë³´ê¸° ë©”ë‰´
 	private void DetailMenu() {
-		System.out.println("1. ¸ñ·Ï");
-		System.out.println("4. ¾²±â");
-		System.out.println("5. ¼öÁ¤");
-		System.out.println("6. »èÁ¦");
-		System.out.println("9. Á¾·á");
+		System.out.println("1. ëª©ë¡");
+		System.out.println("4. ì“°ê¸°");
+		System.out.println("5. ìˆ˜ì •");
+		System.out.println("6. ì‚­ì œ");
+		System.out.println("9. ì¢…ë£Œ");
 	}
 	
 	private void showMenu() {
-		System.out.println("1. ¸ñ·Ï 2. »ó¼¼ 3. °Ë»ö 4. ¾²±â 5. ¼öÁ¤ 6. »èÁ¦ 9. Á¾·á");
+		System.out.println("1. ëª©ë¡ 2. ìƒì„¸ 3. ê²€ìƒ‰ 4. ì“°ê¸° 5. ìˆ˜ì • 6. ì‚­ì œ 7. ê°€ì… 8-ë¡œê·¸ì¸ 99. ì¢…ë£Œ");
+	}
+	
+	private void showMenu(MemberVO s) {
+		if (s != null) {
+			System.out.println(s.getName()+"ë‹˜ì´ ë¡œê·¸ì¸í•œ ìƒíƒœ");
+			System.out.println("1. ëª©ë¡ 2. ìƒì„¸ 3. ê²€ìƒ‰ 4. ì“°ê¸° 5. ìˆ˜ì • 6. ì‚­ì œ 9-ë¡œê·¸ì•„ì›ƒ 99. ì¢…ë£Œ");
+		} else {
+			System.out.println("1. ëª©ë¡ 2. ìƒì„¸ 3. ê²€ìƒ‰ 4. ì“°ê¸° 5. ìˆ˜ì • 6. ì‚­ì œ 7. ê°€ì… 8-ë¡œê·¸ì¸ 99. ì¢…ë£Œ");
+		}
 	}
 
 
-	// È­¸é ¸ñ·Ï º¸±â
+	// í™”ë©´ ëª©ë¡ ë³´ê¸°
 	public void viewList() {
 		Controller cont = new Controller();
-		// 3-µğºñ°®´Ù¿À°í
-		// 4-ÀÀ´ä
+		// 3-ë””ë¹„ê°–ë‹¤ì˜¤ê³ 
+		// 4-ì‘ë‹µ
 		
-		// ¸®½ºÆ® °¡Á®¿À±â
+		// ë¦¬ìŠ¤íŠ¸ ê°€ì ¸ì˜¤ê¸°
 		ArrayList<BoardVO> list = cont.viewList(); 
 		
-		// 5-ÀÀ´ä ¹ŞÀº°Å Ãâ·Â
-		printList(list); // ¸®½ºÆ® Ãâ·Â
+		// 5-ì‘ë‹µ ë°›ì€ê±° ì¶œë ¥
+		printList(list); // ë¦¬ìŠ¤íŠ¸ ì¶œë ¥
 		/*
 		for (BoardVO bvo : list) {
 			System.out.println(bvo);
@@ -149,10 +201,10 @@ public class View {
 		
 		ArrayList<BoardVO> list = cont.search(col, text);
 		
-		printList(list); // ¸®½ºÆ® Ãâ·Â
+		printList(list); // ë¦¬ìŠ¤íŠ¸ ì¶œë ¥
 	}
 	
-	// ÀÔ·Â
+	// ì…ë ¥
 	public String input() {
 		System.out.print(">");
 		Scanner scanner = new Scanner(System.in);
@@ -162,7 +214,7 @@ public class View {
 		return menu;
 	}
 	
-	// ÀÔ·Â
+	// ì…ë ¥
 	public String input(String str) {
 		System.out.print(str);
 		Scanner scanner = new Scanner(System.in);
@@ -172,9 +224,9 @@ public class View {
 		return menu;
 	}
 	
-	// ¹øÈ£ ÀÔ·Â
+	// ë²ˆí˜¸ ì…ë ¥
 	public int inputNum() {
-		System.out.print("¹øÈ£ ÀÔ·Â>");
+		System.out.print("ë²ˆí˜¸ ì…ë ¥>");
 		Scanner scanner = new Scanner(System.in);
 		
 		
@@ -185,23 +237,23 @@ public class View {
 		return num;
 	}
 	
-	// 6-»èÁ¦
+	// 6-ì‚­ì œ
 	public void remove(int bno) {
 		Controller cont = new Controller();
 		
 		int result = cont.remove(bno);
 		
 		if (result == 1) {
-			System.out.println("»èÁ¦ ¿Ï·á");
+			System.out.println("ì‚­ì œ ì™„ë£Œ");
 		} else {
-			System.out.println("»èÁ¦ ½ÇÆĞ : result="+result);
+			System.out.println("ì‚­ì œ ì‹¤íŒ¨ : result="+result);
 		}
 		//return result;
 	}
 	
 	public void printList(ArrayList<BoardVO> list) {
 		
-		System.out.printf("%-3s\t%-10s\t%-90s\t%-10s\t%-3s\t%-3s \n", "¹øÈ£", "¾ÆÀÌµğ", "Á¦¸ñ", "³¯Â¥", "Á¶È¸", "ÃßÃµ");
+		System.out.printf("%-3s\t%-10s\t%-90s\t%-10s\t%-3s\t%-3s \n", "ë²ˆí˜¸", "ì•„ì´ë””", "ì œëª©", "ë‚ ì§œ", "ì¡°íšŒ", "ì¶”ì²œ");
 		
 		for (BoardVO bvo : list) {
 			
@@ -209,7 +261,7 @@ public class View {
 			int han = 0;
 			
 			for (int i = 0; i < bvo.getSubject().length(); i++) {
-				boolean b = Pattern.matches("^[¤¡-¤¾°¡-ÆR]*$", String.valueOf(bvo.getSubject().charAt(i)));
+				boolean b = Pattern.matches("^[ã„±-ã…ê°€-í£]*$", String.valueOf(bvo.getSubject().charAt(i)));
 				if (b) han++;
 			}
 			sbj -= han;
@@ -223,8 +275,20 @@ public class View {
 				bvo.getRecommend());
 		}
 		//System.out.println(bvo.getBbs_no()+"\t"+bvo.getId()+"\t"+bvo.getSubject()+"\t"+bvo.getRegdate()+"\t"+bvo.getHits()+"\t"+bvo.getRecommend());
+
+	}
+	
+	// 8-ë¡œê·¸ì¸
+	public void login(String id, String pw) {
+		MemberController cont = new MemberController();
+		MemberVO vo = cont.login(id, pw);
+		if (vo != null) {
+			System.out.println(vo);
+			ss = vo;
+			ss2 = vo;
+		}
 		
-		
+		System.out.println("ì•„ì´ë””/ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë ¸ìŠµë‹ˆë‹¤");
 	}
 	
 }

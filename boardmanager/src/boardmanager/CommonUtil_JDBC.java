@@ -1,7 +1,9 @@
+package project1;
+
 /*
- * static - °´Ã¼ »ı¼º¾øÀÌ Å¬·¡½º¸í.¸Ş¼Òµå¸íÀ¸·Î »ç¿ë
+ * static - ê°ì²´ ìƒì„±ì—†ì´ í´ë˜ìŠ¤ëª….ë©”ì†Œë“œëª…ìœ¼ë¡œ ì‚¬ìš©
  */
-package boardmanager;
+
 
 import java.sql.Connection;
 import java.sql.ResultSet;

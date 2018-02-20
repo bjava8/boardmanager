@@ -1,4 +1,4 @@
-package boardmanager;
+package project1;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -46,7 +46,7 @@ public class BoardDAO implements IBoard {
 		try {
 			conn = this.getConnection();
 			if (conn == null) {
-				System.out.println("DB ¿¬°á ½ÇÆÐ");
+				System.out.println("DB ì—°ê²° ì‹¤íŒ¨");
 				return list;
 			}
 			pstmt = conn.prepareStatement(sql);
@@ -127,7 +127,7 @@ public class BoardDAO implements IBoard {
 		try {
 			conn = this.getConnection();
 			if (conn == null) {
-				System.out.println("DB ¿¬°á ½ÇÆÐ");
+				System.out.println("DB ì—°ê²° ì‹¤íŒ¨");
 				return list;
 			}
 			pstmt = conn.prepareStatement(sql);
@@ -170,7 +170,7 @@ public class BoardDAO implements IBoard {
 		try {
 			conn = this.getConnection();
 			if (conn == null) {
-				System.out.println("DB ¿¬°á ½ÇÆÐ");
+				System.out.println("DB ì—°ê²° ì‹¤íŒ¨");
 				return list;
 			}
 			pstmt = conn.prepareStatement(sql);
@@ -210,7 +210,7 @@ public class BoardDAO implements IBoard {
 	
 
 
-	// 6-»èÁ¦
+	// 6-ì‚­ì œ
 	public int remove(int bno) {
 		
 		Connection conn = null;
@@ -225,6 +225,32 @@ public class BoardDAO implements IBoard {
 			pstmt = conn.prepareStatement(sql);
 		
 			pstmt.setInt(1, bno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			CommonUtil_JDBC.close(conn, pstmt, null);
+		}
+		
+		return result;
+	}
+
+	public int write(BoardVO vo) {
+		Connection conn = null;
+		int result = 0;
+	
+		String sql = "";
+		sql += "insert into bbs values(bbs_seq.nextval, ?, ?, ?, sysdate, 0, 0)";
+	
+		try {
+			conn = this.getConnection();
+			pstmt = conn.prepareStatement(sql);
+		
+			pstmt.setString(1, vo.getId());
+			pstmt.setString(2, vo.getSubject());
+			pstmt.setString(3, vo.getContent());
 			
 			result = pstmt.executeUpdate();
 			
