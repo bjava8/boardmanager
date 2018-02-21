@@ -1,4 +1,4 @@
-package project1;
+package boardmanager;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

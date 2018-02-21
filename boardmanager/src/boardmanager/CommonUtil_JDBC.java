@@ -1,4 +1,4 @@
-package project1;
+package boardmanager;
 
 /*
  * static - 객체 생성없이 클래스명.메소드명으로 사용

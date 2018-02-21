@@ -1,14 +1,18 @@
-package project1;
+package boardmanager;
 
 public class Main {
 
 	public static void main(String[] args) {
-		
+
+		/*
 		View view = new View();
-		//view.viewList();
 		
 		view.start();
-
+*/
+		
+		Menu menu = new Menu();
+		menu.start();
+		
 		/*
 		BoardDAO crud = new BoardDAO();
 		ArrayList<BoardVO> list = null;

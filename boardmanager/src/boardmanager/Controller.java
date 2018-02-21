@@ -1,4 +1,4 @@
-package project1;
+package boardmanager;
 
 import java.util.ArrayList;
 
@@ -26,11 +26,11 @@ public class Controller {
 	// 3-검색
 	public ArrayList<BoardVO> search(String col, String text) {
 		
-		if (col.equals("0")) {
+		if (col.equals("1")) {
 			col = "subject";
-		} else if (col.equals("1")) {
-			col = "content";
 		} else if (col.equals("2")) {
+			col = "content";
+		} else if (col.equals("3")) {
 			col = "id";
 		}
 		
@@ -54,7 +54,4 @@ public class Controller {
 		int result = dao.write(vo);
 		return result;
 	}
-
-
-
 }

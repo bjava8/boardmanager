@@ -1,4 +1,4 @@
-package project1;
+package boardmanager;
 
 import java.util.ArrayList;
 import java.util.Scanner;

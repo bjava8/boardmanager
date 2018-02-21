@@ -1,4 +1,4 @@
-package project1;
+package boardmanager;
 
 public class MemberVO {
 	private String id;
