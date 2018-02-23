@@ -42,10 +42,34 @@ public class ReplyView {
 		
 	}
 	
-	// 댓글수정
+	// ReplyView - 댓글수정
 	public void update() {
 		System.out.println("댓글수정");
-		replyCont.repUpdate();
+		
+		Scanner scan = new Scanner(System.in);
+		
+		// 댓글 번호 입력
+		System.out.print("수정하려는 댓글의 번호를 입력하세요 : ");
+		int rep_no = scan.nextInt();
+		System.out.print("댓글의 내용을 입력하세요 : ");
+		String content = scan.next();
+		
+		
+		ReplyVO vo = new ReplyVO();
+		
+		
+		// ReplyController 호출
+		int result = replyCont.repUpdate(vo);
+		
+		// 결과값 출력
+		int upCnt = result;
+		if (0 < upCnt) {
+			System.out.println(upCnt + "개의 댓글이 수정되었습니다.");
+		}
+		else {
+			System.out.println("댓글 수정에 실패하였습니다.");
+		}
+		
 	}
 	
 	// 댓글삭제

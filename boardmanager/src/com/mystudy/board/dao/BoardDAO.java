@@ -21,6 +21,7 @@ public class BoardDAO {
 		String sql = "";
 		sql += "select bbs_no, id, subject, to_char(regdate,'yyyy-mm-dd') regdate, hits, recommend ";
 		sql += " from bbs";
+		sql += " ORDER BY bbs_no DESC";
 		
 		try {
 			conn = DBConn.getConnection();
@@ -37,7 +38,6 @@ public class BoardDAO {
 				bvo.setBbs_no(rs.getInt("bbs_no"));
 				bvo.setId(rs.getString("id"));
 				bvo.setSubject(rs.getString("subject"));
-				//bvo.setContent(rs.getString("content"));
 				bvo.setRegdate(rs.getString("regdate"));
 				bvo.setHits(rs.getInt("hits"));
 				bvo.setRecommend(rs.getInt("recommend"));	
@@ -351,5 +351,62 @@ public class BoardDAO {
 		return result;
 	}
 
+	public int update(BoardVO vo) {
+		
+		Connection conn = null;
+		int result = 0;
+	
+		String sql = "";
+		sql += "UPDATE bbs ";
+		sql += " SET subject = ? , content = ?";
+		sql	+= "WHERE bbs_no = ?";
+	
+		try {
+			conn = DBConn.getConnection();
+			pstmt = conn.prepareStatement(sql);
+		
+			pstmt.setString(1, vo.getSubject());
+			pstmt.setString(2, vo.getContent());
+			pstmt.setInt(3, vo.getBbs_no());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConn.close(conn, pstmt, null);
+		}
+		
+		return result;
+		
+	}
+
+	// 삭제 - id비교추가
+	public int delete(BoardVO vo) {
+		Connection conn = null;
+		int result = 0;
+	
+		String sql = "";
+		sql += "DELETE FROM bbs ";
+		sql	+= "WHERE bbs_no = ?";
+		sql	+= " AND id = ?";
+	
+		try {
+			conn = DBConn.getConnection();
+			pstmt = conn.prepareStatement(sql);
+		
+			pstmt.setInt(1, vo.getBbs_no());
+			pstmt.setString(2, vo.getId());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConn.close(conn, pstmt, null);
+		}
+		
+		return result;
+	}
 
 }

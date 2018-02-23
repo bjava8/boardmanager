@@ -10,10 +10,12 @@ public class Util {
 	// 입력
 	public static String input(String str) {
 		System.out.print(str);
+		
 		Scanner scanner = new Scanner(System.in);
 		
-		
 		String menu = scanner.nextLine();
+		
+		
 		//scanner.skip("[\\r\\n]+");
 		
 		System.out.println("입력값 : " + menu);

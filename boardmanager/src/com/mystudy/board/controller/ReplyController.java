@@ -27,9 +27,11 @@ public class ReplyController {
 	}
 	
 	// 댓글수정
-	public void repUpdate() {
-		// TODO Auto-generated method stub
+	public int repUpdate(ReplyVO vo) {
+		// 댓글 ID랑 로그인 ID 비교 일치할 때만 update
 		
+		int result = dao.repUpdate(vo);
+		return result;
 	}
 	// 댓글삭제
 	public void repDelete() {

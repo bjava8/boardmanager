@@ -22,6 +22,15 @@ public class BoardView {
 	// 목록
 	public void selectAll() {
 		System.out.println("목록");
+		
+		ArrayList<BoardVO> list = cont.selectAll();
+		
+		if (!list.isEmpty()) {
+			Util.printList(list);
+		} else {
+			System.out.println("글 없음");
+		}
+		
 	}
 	
 	// 글번호 입력, 글존재확인
@@ -61,6 +70,41 @@ public class BoardView {
 			System.out.println("댓글");
 			ArrayList<ReplyVO> list = replyCont.repAll(bno); // 댓글 목록 
 
+			int allCnt = list.size();
+			if (0 < allCnt) {
+				System.out.println(allCnt + "개의 댓글이 조회되었습니다.");
+				//System.out.println(list);
+			}
+			else {
+				System.out.println("조회된 댓글이 없습니다.");
+			}
+			
+			for (ReplyVO replyVO : list) {
+				System.out.println(replyVO);	// 댓글 출력
+			}
+
+		} else {	// 없는 글번호면 0으로 초기화
+			System.out.println("해당 번호의 글이 존재하지 않습니다.");
+			bno = 0;
+		}
+		
+		return bno;
+	}
+	
+	// 상세2
+	public BoardVO selectDetail(int bno) {
+
+		BoardVO bvo = cont.selectOne(bno);
+
+		if (bvo != null) {
+			
+			//System.out.println(bvo);	// 출력
+			Util.printBoardVO(bvo); // 글 출력
+			
+			// 댓글
+			System.out.println("댓글");
+			ArrayList<ReplyVO> list = replyCont.repAll(bno); // 댓글 목록 
+
 			for (ReplyVO replyVO : list) {
 				System.out.println(replyVO);
 			}
@@ -70,7 +114,7 @@ public class BoardView {
 			bno = 0;
 		}
 		
-		return bno;
+		return bvo;
 	}
 	
 	// 게시판 검색
@@ -158,17 +202,68 @@ public class BoardView {
 	// 글수정
 	public void update(int bno) {
 		System.out.println("글수정");
+		// 제목 입력
+		String subject = Util.input("제목>");
+		// 내용 입력
+		String content = Util.input("내용>");
+		
+		BoardVO vo = new BoardVO();
+		
+		
+		int result = cont.update(vo);
+		//수정 성공
+		//실패
+				
+		
 	}
 	
 	// 글삭제
+	/*
 	public void delete(int bno) {
 		System.out.println("글삭제");
+		
+		String id = Menu.session.getId();
+		System.out.println("Menu.session.getId() = " + id);
+		
+		// 삭제하려는 사람 아이디가 작성자 아이디랑 같으면 삭제
+				// 아니면 안삭제
+		
+		if (id.equals(vo.getId())) {
+			result = dao.remove(bno);
+		}
+		
 		int result = cont.delete(bno);
 		
 		if (result == 1) {
 			System.out.println(bno + "번 글이 삭제되었습니다.");
 		} else {
 			System.out.println(bno + "번 글이 삭제 실패");
+		}
+		
+	}
+	*/
+	
+	public void delete(BoardVO vo) {
+		System.out.println("글삭제");
+		
+		String id = Menu.session.getId();
+		System.out.println("Menu.session.getId() = " + id);
+		
+		// 삭제하려는 사람 아이디가 작성자 아이디랑 같으면 삭제
+		// 아니면 안삭제
+		/*
+		if (id.equals(vo.getId())) {
+			result = dao.remove(bno);
+		}
+		*/
+		vo.setId(id); // 로그인한 사람 아이디로 셋
+		
+		int result = cont.delete(vo);
+		
+		if (result == 1) {
+			System.out.println(vo.getBbs_no() + "번 글이 삭제되었습니다.");
+		} else {
+			System.out.println(vo.getBbs_no() + "번 글이 삭제 실패");
 		}
 		
 	}

@@ -16,7 +16,7 @@ public class BoardController {
 	}
 	
 	// 목록보기
-	public ArrayList<BoardVO> viewList() {
+	public ArrayList<BoardVO> selectAll() {
 		
 		ArrayList<BoardVO> list = dao.selectAll();
 		/*
@@ -70,20 +70,12 @@ public class BoardController {
 	// 삭제
 	public int delete(int bno) {
 		// id 비교
-		String id = Menu.session.getId();
+		
 		int result = 0;
-		
-		System.out.println("Menu.session.getId() = " + id);
-		
-		
+
 		BoardVO vo = dao.selectOne(bno);
 		System.out.println(vo);
-		// 삭제하려는 사람 아이디가 작성자 아이디랑 같으면 삭제
-		// 아니면 안삭제
-		if (id.equals(vo.getId())) {
-			result = dao.remove(bno);
-		}
-		
+
 		return result;
 	}
 
@@ -98,6 +90,20 @@ public class BoardController {
 		int rcm = dao.selectRecommend(bno); 
 		
 		int result = dao.updateRecommend(++rcm, bno);
+		return result;
+	}
+	
+	public int update(BoardVO vo) {
+		
+		//int dao.update(vo);
+		return 0;
+		
+	}
+
+	// 삭제 - id비교추가
+	public int delete(BoardVO vo) {
+		int result = dao.delete(vo);
+
 		return result;
 	}
 	

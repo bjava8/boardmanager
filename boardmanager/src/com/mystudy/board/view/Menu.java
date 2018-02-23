@@ -1,6 +1,7 @@
 package com.mystudy.board.view;
 
 import com.mystudy.board.common.Util;
+import com.mystudy.board.vo.BoardVO;
 import com.mystudy.board.vo.MemberVO;
 
 public class Menu {
@@ -105,8 +106,11 @@ public class Menu {
 			System.out.println("회원정보 ID : " + session.getId() + " | 이름 : " + session.getName());
 			Util.printLine();
 			
-			bno = bv.selectOne(bno);
-			if (bno == 0) break;
+			//bno = bv.selectOne(bno);
+			BoardVO vo = bv.selectDetail(bno);
+			//if (bno == 0) break;
+			if (vo == null) break;
+			
 			System.out.println("1. 글수정 2. 글삭제 3. 댓글쓰기 4. 댓글수정 5. 댓글삭제 6.목록 0. 종료");
 			
 			sel = Util.input("선택>"); // 입력
@@ -114,7 +118,7 @@ public class Menu {
 			if (sel.equals("1")) {	// 1. 글수정
 				bv.update(bno);
 			} else if (sel.equals("2")) {	// 2. 글삭제
-				bv.delete(bno);
+				bv.delete(vo);
 				break;
 			} else if (sel.equals("3")) { // 3. 댓글쓰기
 				rv.insert();

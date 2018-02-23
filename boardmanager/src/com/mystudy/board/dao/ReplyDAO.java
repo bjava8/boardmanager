@@ -47,16 +47,7 @@ public class ReplyDAO {
 				
 				list.add(rvo);
 			}
-			
-			int allCnt = list.size();
-			if (0 < allCnt) {
-				System.out.println(allCnt + "개의 댓글이 조회되었습니다.");
-				//System.out.println(list);
-			}
-			else {
-				System.out.println("조회된 댓글이 없습니다.");
-			}
-					
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -113,7 +104,6 @@ public class ReplyDAO {
 		Connection conn = null;
 
 		try {
-			
 			conn = DBConn.getConnection();
 			if(conn == null) {
 				System.out.println(" >> DB 연결 객체가 없습니다. 이 이상 진행할 수 없습니다.");
@@ -158,6 +148,39 @@ public class ReplyDAO {
 		
 		return list;
 		
+	}
+
+	// 댓글 수정
+	public int repUpdate(ReplyVO vo) {
+		
+		Connection conn = null;
+		int result = 0;
+		
+		try {
+			conn = DBConn.getConnection();
+			if(conn == null) {
+				System.out.println(" >> DB 연결 객체가 없습니다. 이 이상 진행할 수 없습니다.");
+				return 0;
+			}
+
+			StringBuilder sb = new StringBuilder();
+			sb.append("UPDATE REPLY ");
+			sb.append(" SET CONTENT = ? ");
+			sb.append(" WHERE REP_NO = ? ");
+	
+			pstmt = conn.prepareStatement(sb.toString());
+			pstmt.setString(1, vo.getContent());
+			pstmt.setInt(2, vo.getRep_no());
+			
+			result = pstmt.executeUpdate();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			DBConn.close(conn, pstmt, rs);
+		}
+		return result;
 	}
 	
 	
