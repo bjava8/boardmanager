@@ -1,8 +1,10 @@
-package boardmanager;
+package com.mystudy.board.common;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DBConn {
 	
@@ -29,5 +31,32 @@ public class DBConn {
 			e.printStackTrace();
 		}
 		return conn;
+	}
+	
+	public static void close(Connection conn, Statement stmt, ResultSet rs) {
+		
+		if (rs != null) {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if (stmt != null) {
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if (conn != null) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

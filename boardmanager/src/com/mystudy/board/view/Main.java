@@ -1,4 +1,4 @@
-package boardmanager;
+package com.mystudy.board.view;
 
 public class Main {
 

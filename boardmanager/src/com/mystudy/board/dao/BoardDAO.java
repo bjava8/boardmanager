@@ -1,50 +1,29 @@
-package boardmanager;
+package com.mystudy.board.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class BoardDAO implements IBoard {
+import com.mystudy.board.common.DBConn;
+import com.mystudy.board.vo.BoardVO;
+
+public class BoardDAO {
 	
 	PreparedStatement pstmt;
 	ResultSet rs;
 	
-	public BoardDAO() {
-		//step1 load the driver class
-		try {
-			Class.forName(DRIVER);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	@Override
-	public Connection getConnection() {
-		//step2 create  the connection object
-		Connection conn = null;
-		try {
-			conn = DriverManager.getConnection(URL, USER, PASSWORD); // url, user, password
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return conn;
-	}
-	
-	@Override
 	public ArrayList<BoardVO> selectAll() {
 		ArrayList<BoardVO> list = new ArrayList<BoardVO>();
 		Connection conn = null;
-		
 		
 		String sql = "";
 		sql += "select bbs_no, id, subject, to_char(regdate,'yyyy-mm-dd') regdate, hits, recommend ";
 		sql += " from bbs";
 		
 		try {
-			conn = this.getConnection();
+			conn = DBConn.getConnection();
 			if (conn == null) {
 				System.out.println("DB 연결 실패");
 				return list;
@@ -69,16 +48,15 @@ public class BoardDAO implements IBoard {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			CommonUtil_JDBC.close(conn, pstmt, rs);
+			DBConn.close(conn, pstmt, rs);
 		}
 		
 		return list;
 	}
 	
-	@Override
 	public BoardVO selectOne(int bbs_no) {
 		Connection conn = null;
-		BoardVO bvo = new BoardVO();
+		BoardVO bvo = null;
 		
 		String sql = "";
 		sql += "select bbs_no, id, subject, content, regdate, hits, recommend ";
@@ -86,13 +64,14 @@ public class BoardDAO implements IBoard {
 		sql += " where bbs_no = ?";
 		
 		try {
-			conn = this.getConnection();
+			conn = DBConn.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, bbs_no); 
 			
 			rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
+				bvo = new BoardVO();
 				bvo.setBbs_no(rs.getInt("bbs_no"));
 				bvo.setId(rs.getString("id"));
 				bvo.setSubject(rs.getString("subject"));
@@ -102,18 +81,15 @@ public class BoardDAO implements IBoard {
 				bvo.setRecommend(rs.getInt("recommend"));				
 			}
 			
-			System.out.println(bvo);
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			CommonUtil_JDBC.close(conn, pstmt, rs);
+			DBConn.close(conn, pstmt, rs);
 		}
 		
 		return bvo;	
 	}
 
-	@Override
 	public ArrayList<BoardVO> searchBySubject(String subject) {
 		ArrayList<BoardVO> list = new ArrayList<BoardVO>();
 		Connection conn = null;
@@ -125,7 +101,7 @@ public class BoardDAO implements IBoard {
 		sql += " where subject like '%' || ? || '%'";
 		
 		try {
-			conn = this.getConnection();
+			conn = DBConn.getConnection();
 			if (conn == null) {
 				System.out.println("DB 연결 실패");
 				return list;
@@ -151,13 +127,12 @@ public class BoardDAO implements IBoard {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			CommonUtil_JDBC.close(conn, pstmt, rs);
+			DBConn.close(conn, pstmt, rs);
 		}
 		
 		return list;
 	}
 
-	@Override
 	public ArrayList<BoardVO> search(String col, String q) {
 		ArrayList<BoardVO> list = new ArrayList<BoardVO>();
 		Connection conn = null;
@@ -168,7 +143,7 @@ public class BoardDAO implements IBoard {
 		sql += " where " + col + " like '%' || ? || '%'";
 		
 		try {
-			conn = this.getConnection();
+			conn = DBConn.getConnection();
 			if (conn == null) {
 				System.out.println("DB 연결 실패");
 				return list;
@@ -196,13 +171,12 @@ public class BoardDAO implements IBoard {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			CommonUtil_JDBC.close(conn, pstmt, rs);
+			DBConn.close(conn, pstmt, rs);
 		}
 		
 		return list;
 	}
 
-	@Override
 	public ArrayList<BoardVO> searchById(String id) {
 		// TODO Auto-generated method stub
 		return null;
@@ -210,7 +184,7 @@ public class BoardDAO implements IBoard {
 	
 
 
-	// 6-삭제
+	// 삭제
 	public int remove(int bno) {
 		
 		Connection conn = null;
@@ -221,7 +195,7 @@ public class BoardDAO implements IBoard {
 		sql	+= "WHERE bbs_no = ?";
 	
 		try {
-			conn = this.getConnection();
+			conn = DBConn.getConnection();
 			pstmt = conn.prepareStatement(sql);
 		
 			pstmt.setInt(1, bno);
@@ -231,7 +205,7 @@ public class BoardDAO implements IBoard {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			CommonUtil_JDBC.close(conn, pstmt, null);
+			DBConn.close(conn, pstmt, null);
 		}
 		
 		return result;
@@ -245,7 +219,7 @@ public class BoardDAO implements IBoard {
 		sql += "insert into bbs values(bbs_seq.nextval, ?, ?, ?, sysdate, 0, 0)";
 	
 		try {
-			conn = this.getConnection();
+			conn = DBConn.getConnection();
 			pstmt = conn.prepareStatement(sql);
 		
 			pstmt.setString(1, vo.getId());
@@ -257,10 +231,125 @@ public class BoardDAO implements IBoard {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			CommonUtil_JDBC.close(conn, pstmt, null);
+			DBConn.close(conn, pstmt, null);
 		}
 		
 		return result;
 	}
 	
+	public int selectHits(int bno) {
+		
+		Connection conn = null;
+		int result = 0;
+	
+		String sql = "";
+		sql += "SELECT hits FROM bbs ";
+		sql	+= " WHERE bbs_no = ?";
+	
+		try {
+			conn = DBConn.getConnection();
+			pstmt = conn.prepareStatement(sql);
+		
+			pstmt.setInt(1, bno);
+			
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				result = rs.getInt("hits");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConn.close(conn, pstmt, null);
+		}
+		
+		return result;
+	}
+
+	public int updateHits(int hits, int bno) {
+		
+		Connection conn = null;
+		int result = 0;
+	
+		String sql = "";
+		sql += "UPDATE bbs ";
+		sql += " SET hits = ? ";
+		sql	+= "WHERE bbs_no = ?";
+	
+		try {
+			conn = DBConn.getConnection();
+			pstmt = conn.prepareStatement(sql);
+		
+			pstmt.setInt(1, hits);
+			pstmt.setInt(2, bno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConn.close(conn, pstmt, null);
+		}
+		
+		return result;
+	}
+	
+	public int selectRecommend(int bno) {
+		Connection conn = null;
+		int result = 0;
+	
+		String sql = "";
+		sql += "SELECT recommend FROM bbs ";
+		sql	+= " WHERE bbs_no = ?";
+	
+		try {
+			conn = DBConn.getConnection();
+			pstmt = conn.prepareStatement(sql);
+		
+			pstmt.setInt(1, bno);
+			
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				result = rs.getInt("recommend");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConn.close(conn, pstmt, null);
+		}
+		
+		return result;
+	}
+	
+	public int updateRecommend(int rcm, int bno) {
+		Connection conn = null;
+		int result = 0;
+	
+		String sql = "";
+		sql += "UPDATE bbs ";
+		sql += " SET recommend = ? ";
+		sql	+= "WHERE bbs_no = ?";
+	
+		try {
+			conn = DBConn.getConnection();
+			pstmt = conn.prepareStatement(sql);
+		
+			pstmt.setInt(1, rcm);
+			pstmt.setInt(2, bno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConn.close(conn, pstmt, null);
+		}
+		
+		return result;
+	}
+
+
 }

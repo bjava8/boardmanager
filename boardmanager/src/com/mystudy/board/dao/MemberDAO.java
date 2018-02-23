@@ -1,9 +1,12 @@
-package boardmanager;
+package com.mystudy.board.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import com.mystudy.board.common.DBConn;
+import com.mystudy.board.vo.MemberVO;
 
 public class MemberDAO {
 
@@ -39,6 +42,8 @@ public class MemberDAO {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
+		} finally {
+			DBConn.close(conn, pstmt, rs);
 		}
 		
 		return vo;

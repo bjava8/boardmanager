@@ -1,4 +1,4 @@
-package boardmanager;
+package com.mystudy.board.vo;
 
 public class MemberVO {
 	private String id;

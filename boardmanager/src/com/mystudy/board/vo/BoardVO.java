@@ -1,4 +1,4 @@
-package boardmanager;
+package com.mystudy.board.vo;
 
 public class BoardVO {
 	private int bbs_no;
@@ -57,6 +57,4 @@ public class BoardVO {
 		return "BoardVO [bbs_no=" + bbs_no + ", id=" + id + ", subject=" + subject + ", content=" + content
 				+ ", regdate=" + regdate + ", hits=" + hits + ", recommend=" + recommend + "]";
 	}
-	
-	
 }

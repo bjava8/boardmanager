@@ -1,8 +1,13 @@
-package boardmanager;
+package com.mystudy.board;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+
+import com.mystudy.board.controller.BoardController;
+import com.mystudy.board.controller.MemberController;
+import com.mystudy.board.vo.BoardVO;
+import com.mystudy.board.vo.MemberVO;
 
 public class View {
 	static MemberVO ss;
@@ -29,7 +34,7 @@ public class View {
 			} else if (sel.equals("2")) { // 2-상세보기
 				// 번호 입력 받기
 				int bno = inputNum();
-				viewDetail(bno);
+				//viewDetail(bno);
 				//DetailMenu();
 			} else if (sel.equals("3")) { // 3-검색
 				// 제목, 내용, 작성자 선택
@@ -110,7 +115,7 @@ public class View {
 
 	private void write(String id) {
 
-		Controller cont = new Controller();
+		BoardController cont = new BoardController();
 			
 		String subject = input("제목:");
 		String content = input("내용:");
@@ -121,13 +126,8 @@ public class View {
 		vo.setSubject(subject);
 		vo.setContent(content);
 		
-		int result = cont.write(vo);
-			
-		if (result == 1) {
-			System.out.println("삭제 완료");
-		} else {
-			System.out.println("삭제 실패 : result="+result);
-		}
+		//int result = cont.write(vo);
+
 	}
 
 	/*
@@ -172,7 +172,7 @@ public class View {
 
 	// 화면 목록 보기
 	public void viewList() {
-		Controller cont = new Controller();
+		BoardController cont = new BoardController();
 		// 3-디비갖다오고
 		// 4-응답
 		
@@ -187,7 +187,7 @@ public class View {
 		}
 	*/
 	}
-	
+	/*
 	public void viewDetail(int bno) {
 		Controller cont = new Controller();
 		
@@ -195,9 +195,9 @@ public class View {
 		
 		System.out.println(bvo);
 	}
-	
+	*/
 	private void search(String col, String text) {
-		Controller cont = new Controller();
+		BoardController cont = new BoardController();
 		
 		ArrayList<BoardVO> list = cont.search(col, text);
 		
@@ -239,15 +239,11 @@ public class View {
 	
 	// 6-삭제
 	public void remove(int bno) {
-		Controller cont = new Controller();
+		BoardController cont = new BoardController();
 		
-		int result = cont.remove(bno);
+		//int result = cont.remove(bno);
 		
-		if (result == 1) {
-			System.out.println("삭제 완료");
-		} else {
-			System.out.println("삭제 실패 : result="+result);
-		}
+
 		//return result;
 	}
 	
@@ -278,7 +274,7 @@ public class View {
 
 	}
 	
-	// 8-로그인
+	// 로그인
 	public void login(String id, String pw) {
 		MemberController cont = new MemberController();
 		MemberVO vo = cont.login(id, pw);
