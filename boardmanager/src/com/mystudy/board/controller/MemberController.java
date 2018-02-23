@@ -1,4 +1,7 @@
-package boardmanager;
+package com.mystudy.board.controller;
+
+import com.mystudy.board.dao.MemberDAO;
+import com.mystudy.board.vo.MemberVO;
 
 public class MemberController {
 
